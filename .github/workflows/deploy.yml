@@ -36,22 +36,24 @@ jobs:
         with:
           name: mytextfile
           path: ./${{ env.filename }}
-
-
+  #step/job name run
   run:
+    #runs on ubuntu
     runs-on: ubuntu-latest
+    #depends on build step/job to finish before starting
     needs: [build]
+    #steps
     steps:
-    
+    #step1, download artifact
       - name: Download a single artifact
         uses: actions/download-artifact@v2
         with:
           name: mytextfile
-
+      #step2 write into text file
       - name: Write text into downloaded text file
         run: |
           echo "I'm a little teapot short and stout" >> ${{ env.filename }}
-      
+      #step3 reupload with new name
       - name: reupload artifact as final
         uses: actions/upload-artifact@v2
         with:
